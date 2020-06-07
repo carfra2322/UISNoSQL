@@ -109,4 +109,45 @@ WHERE i.status_id = 2 AND t.user_id =1;
 
 --LAB1B
 
+--Insert 20 transactions.
+-- 3 actual_checkin_time after the scheduled_checkin_time.
+-- 5 need to have checkout_time after september 3 2018
+INSERT INTO transactions
+(user_id, inventory_id, checkout_time, scheduled_checkin_time, actual_checkin_time, created_at, updated_at)
+VALUES
+(1, 1, '2018-08-03 14:39:53', '2018-08-01 14:39:53' ,'2018-08-02 14:39:53', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(1, 1, '2018-08-04 14:39:53', '2018-08-02 14:39:53' ,'2018-08-03 14:39:53', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(1, 2, '2018-08-05 14:39:53', '2018-08-03 14:39:53' ,'2018-08-04 14:39:53', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(1, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(3, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(1, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 2, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(3, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(1, 1, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 2, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(3, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(1, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 2, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(3, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 1, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(1, 3, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 2, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP ),
+(2, 1, '2019-08-05 12:00:00', '2019-08-03 12:00:00' ,'2019-08-04 12:01:00', CURRENT_TIMESTAMP ,CURRENT_TIMESTAMP );
 
+
+-- CREATE checkins view
+-- distinct items that were checked in late grouped by user_id, inventory_id, and description
+-- display total number of late checkins per device per user
+-- ex user1 checked in 2 items late, there  should be 2 rows displayed for user1 and each row should include the total
+-- number of items that user returned that particular item late
+
+CREATE OR REPLACE VIEW checkins AS
+SELECT user_id, inventory_id, COUNT(inventory_id)
+FROM transactions
+WHERE actual_checkin_time > scheduled_checkin_time
+GROUP BY user_id, inventory_id;
+
+-- TEST CHECKINS
+SELECT * FROM checkins;
