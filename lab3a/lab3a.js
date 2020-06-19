@@ -2,13 +2,13 @@
 use blogger
 
 
-/*
-* 1) Create 3 users with _id = "5bb26043708926e438db6cad",
-* "5bb26043708926e438db6cae", "5bb26043708926e438db6caf"
-* users collection contains fields name and email.
-* For the field _id, use ObjectId instead of String.
-* Ex:  "_id" : ObjectId("5bb26043708926e438db6cad")
-*/
+
+// 1) Create 3 users with _id = "5bb26043708926e438db6cad",
+// "5bb26043708926e438db6cae", "5bb26043708926e438db6caf"
+// users collection contains fields name and email.
+// For the field _id, use ObjectId instead of String.
+// Ex:  "_id" : ObjectId("5bb26043708926e438db6cad")
+
 
 function insertUser(
   id,
@@ -39,13 +39,13 @@ db.users.find().pretty()
 db.users.find({"_id":ObjectId("5bb26043708926e438db6cad")})
 
 
-/*
-* Create 3 blogs with fields: title, body, slug, author,
-* comments: (array with objects containing user_id, comment, approved, created_at),
-* category (array with objects containing name)
-* The user_id and author fields should be one of the 3 users _id found above
-* One of the posts should contain the word "framework" in the body
-*/
+
+// Create 3 blogs with fields: title, body, slug, author,
+// comments: (array with objects containing user_id, comment, approved, created_at),
+// category (array with objects containing name)
+// The user_id and author fields should be one of the 3 users _id found above
+// One of the posts should contain the word "framework" in the body
+
 function createBlog(
   title,
   body,
