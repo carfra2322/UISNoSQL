@@ -67,10 +67,18 @@ total += values[i].count;
 return { count : total };
 }
 
+finalize = function(key, reducedValue){
+   return {
+     total:reducedValue.count
+   };
+}
+
+
 results = db.runCommand({
 mapReduce: 'phones',
 map: map,
 reduce: reduce,
+finalize:finalize,
 out: 'phones.report',
 })
 
