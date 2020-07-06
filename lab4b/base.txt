@@ -1,6 +1,10 @@
 #Your create foods table code goes here
 
-
+# CREATE TABLE: SINGLE COL FAMILY NAMED 'fact'
+# Compresision GZ
+# Bloomfilter
+create 'foods', {NAME => 'fact', VERSIONS => 1, BLOOMFILTER => 'ROWCOL'}
+enable 'foods'
 
 #Do not remove the exit call below
 exit
