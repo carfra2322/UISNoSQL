@@ -1,0 +1,80 @@
+
+<% include partials/header %>
+
+<% if(errors != undefined){ %>
+    <ul>
+    <% errors.forEach(function(error){ %>
+    <li style="color:red"><%= error.msg %></li>
+    <% }) %>
+    </ul>
+    <% } %>
+
+<div id="form-main">
+    <div id="form-div" >
+        <h1 id="form-h1">ADD BLOG</h1>
+        <form method="POST" id="form-h1" action="/blogs/add">
+        <input type="text" name="title" placeholder="Title" size="50"><br>       
+        <input type="text" name="slug" placeholder="Slug" size="50"><br>
+        <select name="author">
+            <% users.forEach(function(user){ %>
+            <option value=<%= user._id %>><%= user.name %></option>
+            <% }) %>
+        </select>
+        <br>
+        <textarea name="body" placeholder="body" style="width:400px;height:100px;"></textarea><br>
+        <textarea name="comment" placeholder="comment" style="width:400px;height:100px;"></textarea><br>
+        <input type="text" placeholder="category" name="category" size="50"><br>
+        <input type="submit" class="btn btn-5" value="Submit">
+        </form>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>  
+<br>
+<br>
+<br>
+<br> 
+<div id="list-main">
+    <div id="list-div">
+    <h1>Blogs</h1>
+    
+    <% blogs.forEach(function(blog){ %>
+        <h3> <%= blog.title %> </h3>
+        <i>by <%= blog.author.name %></i>
+        <br>
+        <br>
+        <%= blog.body %>
+        <br>
+        <br>
+        <b>Comments</b>
+        <% for (var i =0; i < blog.comments.length; i++) {%>
+            <ul>
+            <li><%= blog.comments[i].comment %> (<%= blog.comments[i].created_at.toDateString() %>)</li>
+            </ul>
+        <% } %>
+        <b>Categories</b>
+        <% for (var i =0; i < blog.category.length; i++) {%>
+            <ul>
+            <li><%= blog.category[i].name %> </li>
+            </ul>
+        <% } %>
+        <a href='/blogs/edit/<%= blog._id %>'>Edit</a>&nbsp;
+        <form method="post" action="/blogs/delete/<%= blog._id %>">
+            <input type="submit" class="btn-delete" name="delete" value='DELETE' onClick="return confirm('Are you sure you want to delete?')"/>
+            <input type="hidden" name="_method" value="DELETE" /></form>
+
+    <% }) %>
+    </div>
+</div>
+
+
+
+
+<% include partials/footer %>

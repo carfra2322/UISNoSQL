@@ -1,0 +1,29 @@
+
+<% include partials/header %>
+
+
+
+<% if(errors != undefined){ %>
+<ul>
+<% errors.forEach(function(error){ %>
+<li style="color:red"><%= error.msg %></li>
+<% }) %>
+</ul>
+<% } %>
+
+<div id="form-main">
+    <div id="form-div">
+        <h1 id="form-h1">Edit User:</h1>
+        <form method="POST" id="form1" action="/users/edit/<%= user. _id %>">
+        <input type="hidden" name="_method" value="PUT" />
+        <label>Name:</label><br>
+        <input type="text" name="name" id="name" value="<%= user.name %>"><br>
+        <label>Email:</label><br>
+        <input type="text" name="email" id="email" value="<%= user.email %>"><br>
+        <br>
+        <input type="submit" class="btn btn-5" value="Edit">
+        </form>
+    </div>
+</div>
+
+<% include partials/footer %>

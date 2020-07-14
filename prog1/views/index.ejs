@@ -1,0 +1,46 @@
+
+<% include partials/header %>
+
+
+
+
+<% if(errors != undefined){ %>
+<ul>
+<% errors.forEach(function(error){ %>
+<li style="color:red"><%= error.msg %></li>
+<% }) %>
+</ul>
+<% } %>
+
+
+<div id="form-main">
+    <div id="form-div">
+        <h1 id="form-h1">ADD USER</h1>
+        <form method="POST" class="form" id="form1" action="/users/add">
+        <input name="name" type="text" class="feedback-input" placeholder="Name" id="name" />
+        <input type="text" name="email" class="feedback-input" placeholder="Email" id="email"/>
+        
+        <input type="submit" class="btn btn-5" value="Submit">
+        </form>
+    </div>
+</div>
+
+
+
+<div id="list-main">
+    <div id="list-div">
+<h1 id="form-h1">USERS</h1>
+<ul>
+<% users.forEach(function(user){ %>
+<li><%= user.name %> (<%= user.email %>) 
+    <a href='/users/edit/<%= user._id %>'>Edit</a>&nbsp;
+    <form method="post" action="/users/delete/<%= user._id %>">
+        <input type="submit" class="btn-delete" name="delete" value='DELETE' onClick="return confirm('Are you sure you want to delete?')"/>
+        <input type="hidden" name="_method" value="DELETE" /></form>
+<% }) %>
+</ul>
+</div>
+</div>
+
+
+<% include partials/footer %>
