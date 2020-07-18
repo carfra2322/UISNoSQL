@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Add your curl statements here
-HOST="http://admin:p%40ssw0rd@localhost:5984"
+HOST="http://couchdb:5984"
 curl $HOST
 
 # list of DBs
