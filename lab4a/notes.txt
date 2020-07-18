@@ -1,0 +1,84 @@
+# TABLE CREATION
+
+create 'wiki', 'text'
+
+# INSERTING AND READING DATA
+
+put 'wiki', 'Home', 'text:', 'Welcome to My HBase Wiki!'
+
+# We can query the data for the 'Home' row using get,
+# which requires two parameters: the table name and the row key.
+# (You can optionally specify a list of columns to return.)
+
+get 'wiki', 'Home', 'text:'
+
+# DEFAULTS
+# default value is to keep 3 versions of column values
+# we need to change that
+
+# to make schema changes, you need to take the table offline
+
+disable 'wiki'
+
+alter 'wiki', { NAME => 'text', VERSIONS => org.apache.hadoop.hbase.HConstants::ALL_VERSIONS }
+
+# add revision column family
+alter 'wiki', { NAME => 'revision', VERSIONS => org.apache.hadoop.hbase.HConstants::ALL_VERSIONS }
+
+# RE-ENABLE
+enable 'wiki'
+
+# JRUBY
+# JRuby runs on the Java virtual machine (JVM), giving it access to the Hbase Java code.
+# The script below is available for you to cut/paste into your Hbase shell:
+
+import 'org.apache.hadoop.hbase.client.HTable'
+import 'org.apache.hadoop.hbase.client.Put'
+def jbytes( *args )
+  args.map { |arg| arg.to_s.to_java_bytes }
+end
+table = HTable.new( @hbase.configuration, "wiki" )
+p = Put.new( *jbytes( "Home" ) )
+p.add( *jbytes( "text", "", "Hello world" ) )
+p.add( *jbytes( "revision", "author", "jimbo" ) )
+p.add( *jbytes( "revision", "comment", "my first edit" ) )
+table.put( p )
+
+# verify the command work
+get 'wiki', 'Home'
+
+
+#col_fam #col_qual #value
+
+myconstant = {"text:" => "What JavaScript framework do you prefer?",
+"revision:author" => "Tulio Llosa",
+"revision:comment" => "I use Vue.js" }
+
+
+
+
+myconstant.each do|c|
+ col_fam = c[0].split(":",-1)[0]
+ col_qual = c[0].split(":",-1)[1]
+ val = c[1]
+ #puts c[0].split(":",-1)
+ print col_fam + " " +  col_qual + val + "\n"
+end
+
+
+import 'org.apache.hadoop.hbase.client.HTable'
+import 'org.apache.hadoop.hbase.client.Put'
+
+def jbytes( *args )
+  args.map { |arg| arg.to_s.to_java_bytes }
+end
+
+def put_many( table_name, row, column_values)
+
+
+***INSERT YOUR CODE******
+
+end
+
+table.put( p )
+end
